@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>GPS</title>
+    <script>
+
+        
+
+        //显示结果的区域对象
+        var result;
+
+        window.onload = function () {
+            result = document.getElementById("result")
+        }
+
+        //获取位置
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    showPosition, handleLocationError,
+                    { maximumAge: 60000, timeout: 50000, enableHighAccuracy: true }
+                );
+            } else {
+                result.innerHTML = "该设备不支持gps定位";
+            }
+        }
+
+        
+
+        //获取位置失败处理
+        function handleLocationError(error) {
+            switch (error.code) {
+                case 0:
+                    alert("获取位置信息出错！");
+                    break;
+                case 1:
+                    alert("您设置了阻止该页面获取位置信息！");
+                    break;
+                case 2:
+                    alert("浏览器无法确定您的位置！");
+                    break;
+                case 3:
+                    alert("获取位置信息超时！");
+                    break;
+            }
+        }
+
+        //显示位置
+        function showPosition(position) {
+            result.innerHTML = "经度: " + position.coords.longitude +
+                "<br>纬度: " + position.coords.latitude +
+                "<br>准确度：" + position.coords.accuracy +
+                "<br>海拔：" + position.coords.altitude +
+                "<br>海拔准确度：" + position.coords.altitudeAccuracy +
+                "<br>时间戳：" + position.timestamp;
+        }
+
+
+        function kefu() {
+            var url = './chat2.html'
+            var name = '项目名称'
+            var iWidth = 410
+            var iHeight = 600
+
+            var iTop = (window.screen.availHeight - iHeight-100)
+            var iLeft = (window.screen.availWidth - iWidth-100)
+            window.open(url, name, 'height=' + iHeight + ',,innerHeight= ' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',status=no,toolbar=no,menubar=no,location=no,resizable=no,scrollbars=0,titlebar=no')
+        }
+
+    </script>
+</head>
+
+<body style="font-size:100">
+    <button onclick="getLocation()">获取位置</button>
+    <p id="result"></p>
+
+    <button id="kefu" onclick="kefu()">在线客服</button>
+</body>
+
+</html>
